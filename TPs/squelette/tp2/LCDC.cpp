@@ -158,6 +158,10 @@ tlm::tlm_response_status LCDC::write(const ensitlm::addr_t &a,
 	case LCDC_ADDR_REG:
 		addr_register = d;
 		break;
+  case LCDC_START_REG:
+    if(d == 0x1) { started = true; }
+    else { started = false; }
+    break;
 	case LCDC_INT_REG:
 		int_register = d;
 		if (int_register == 0)
@@ -174,7 +178,7 @@ tlm::tlm_response_status LCDC::write(const ensitlm::addr_t &a,
 // main thread
 void LCDC::compute() {
 	while (!started) {
-		wait(start_event);
+    wait(start_event);
 	}
 
 	cout << name() << ": LCDC starting" << endl;
