@@ -22,10 +22,10 @@
 #define main __start
 
 /* fonctions déclarées ici, et implémentées dans native_wrapper.cpp */
-extern void write_mem(uint32_t addr, uint32_t data);
-extern uint32_t read_mem(uint32_t addr);
-extern void cpu_relax();
-extern void wait_for_irq();
+extern void hal_write32(uint32_t addr, uint32_t data);
+extern uint32_t hal_read32(uint32_t addr);
+extern void hal_cpu_relax();
+extern void hal_wait_for_irq();
 
 /* Nothing: we assume IT are active all the time */
 static inline void microblaze_enable_interrupts() {};
