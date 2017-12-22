@@ -4,9 +4,8 @@ CFLAGS=$(INCLUDE)
 # ROOT=../../../..
 # include $(ROOT)/Makefile.common
 
-main.o: ../main.c # TODO: dependancies
-	$(CC) $(CFLAGS) -o main.o -c ../main.c 
-# echo "Unimplemented rule"; exit 1
+main.o: ../main.c hal.h address_map.h # TODO: dependancies (il en manque surement)
+	$(CC) $(CFLAGS) -o main.o -c ../main.c
 
 .PHONY: clean realclean
 clean:
