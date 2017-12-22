@@ -1,11 +1,11 @@
 CC=gcc
-INCLUDE=-I. -I../../
+INCLUDE=-I. -I../../ -I../
 CFLAGS=$(INCLUDE)
 # ROOT=../../../..
 # include $(ROOT)/Makefile.common
 
-main.o: # TODO: dependancies
-	$(CC)  $(CFLAGS) hal.h -o main.o
+main.o: ../main.c # TODO: dependancies
+	$(CC) $(CFLAGS) -o main.o -c ../main.c 
 # echo "Unimplemented rule"; exit 1
 
 .PHONY: clean realclean
