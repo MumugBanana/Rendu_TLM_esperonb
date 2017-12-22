@@ -68,8 +68,8 @@ unsigned int NativeWrapper::hal_read32(unsigned int addr)
 
 void NativeWrapper::hal_cpu_relax()
 {
-	// Attente de temps arbitraire
-	sc_core::wait(500, sc_core::SC_NS);
+	// Attente de temps arbitraire : déterminé de façon empirique
+	sc_core::wait(10, sc_core::SC_MS);
 }
 
 void NativeWrapper::hal_wait_for_irq()
@@ -89,6 +89,6 @@ void NativeWrapper::compute()
 void NativeWrapper::interrupt_handler_internal()
 {
     interrupt = true;
-	interrupt_event.notify();
 	interrupt_handler();
+	interrupt_event.notify();
 }
