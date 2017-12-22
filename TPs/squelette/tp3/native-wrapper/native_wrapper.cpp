@@ -43,7 +43,9 @@ NativeWrapper * NativeWrapper::get_instance() {
 NativeWrapper::NativeWrapper(sc_core::sc_module_name name) : sc_module(name),
 							     irq("irq")
 {
-	abort(); // TODO
+	SC_THREAD(compute);
+	SC_METHOD(interrupt_handler_internal);
+	sensitive << irq;
 }
 
 void NativeWrapper::hal_write32(unsigned int addr, unsigned int data)
@@ -56,7 +58,7 @@ void NativeWrapper::hal_write32(unsigned int addr, unsigned int data)
 
 unsigned int NativeWrapper::hal_read32(unsigned int addr)
 {
-	data_t result_value;
+	ensitlm::data_t result_value;
 	tlm::tlm_response_status response = socket.read(addr, result_value);
 	if(response !=  tlm::TLM_OK_RESPONSE) {
 		std::cout << "Read error" << response;
@@ -67,7 +69,7 @@ unsigned int NativeWrapper::hal_read32(unsigned int addr)
 void NativeWrapper::hal_cpu_relax()
 {
 	// Attente de temps arbitraire
-	SC_WAIT(500, SC_NS);
+	sc_core::wait(500, sc_core::SC_NS);
 }
 
 void NativeWrapper::hal_wait_for_irq()
@@ -81,10 +83,12 @@ void NativeWrapper::hal_wait_for_irq()
 
 void NativeWrapper::compute()
 {
-	abort(); // TODO
+	__start();
 }
 
 void NativeWrapper::interrupt_handler_internal()
 {
-	abort(); // TODO
+    interrupt = true;
+	interrupt_event.notify();
+	interrupt_handler();
 }

@@ -4,7 +4,7 @@ CFLAGS=$(INCLUDE)
 # ROOT=../../../..
 # include $(ROOT)/Makefile.common
 
-main.o: ../main.c hal.h address_map.h # TODO: dependancies (il en manque surement)
+main.o: ../main.c hal.h # TODO: dependancies (il en manque surement)
 	$(CC) $(CFLAGS) -o main.o -c ../main.c
 
 .PHONY: clean realclean

@@ -234,6 +234,7 @@ int main() {
 		set_pixel(old_img_addr, 51, 12, 1);
 		set_pixel(old_img_addr, 50, 12, 1);
 
+		hal_cpu_relax();
 		while (1) {
 			uint32_t d = hal_read32(GPIO_BASEADDR + GPIO_DATA_OFFSET);
 			if (TEST_BIT(d, GPIO_BTN0)) {
