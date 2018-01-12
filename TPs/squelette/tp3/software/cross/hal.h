@@ -23,10 +23,26 @@
 } while (0)
 
 /* TODO: implement HAL primitives for cross-compilation */
-#define hal_read32(a)      abort()
-#define hal_write32(a, d)  abort()
-#define hal_wait_for_irq() abort()
-#define hal_cpu_relax()    abort()
+// #define hal_read32(a)   abort()
+// #define hal_write32(a, d)  abort()
+// #define hal_wait_for_irq() abort()
+// #define hal_cpu_relax()    abort()
+
+unsigned int hal_read32(unsigned int a) {
+	unsigned int *ptr = (void*) a;
+	return *ptr;
+}
+
+void hal_write32(unsigned int a, unsigned int d) {
+	unsigned int *ptr = (void*) a;
+	*ptr = d;
+}
+
+void hal_wait_for_irq() {
+}
+
+void hal_cpu_relax() {
+}
 
 void microblaze_enable_interrupts(void) {
 	__asm("ori     r3, r0, 2\n"
