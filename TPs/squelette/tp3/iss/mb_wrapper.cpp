@@ -42,6 +42,7 @@ void MBWrapper::exec_data_request(enum iss_t::DataAccessType mem_type,
 		if(status !=  tlm::TLM_OK_RESPONSE) {
 			std::cerr << "Read error MBWrapper::exec_data_request " << status;
 		}
+		localbuf = uint32_machine_to_be(localbuf);
 		// abort(); // TODO
 #ifdef DEBUG
 		std::cout << hex << "read    " << setw(10) << localbuf
@@ -63,7 +64,8 @@ void MBWrapper::exec_data_request(enum iss_t::DataAccessType mem_type,
 	case iss_t::WRITE_WORD: {
 		/* The ISS requested a data write
 		   (mem_wdata at mem_addr). */
-	  tlm::tlm_response_status status = socket.write(mem_addr, mem_wdata);
+		mem_wdata = uint32_be_to_machine(mem_wdata);
+	 	tlm::tlm_response_status status = socket.write(mem_addr, mem_wdata);
 		if(status !=  tlm::TLM_OK_RESPONSE) {
 			std::cerr << "Write error MBWrapper::exec_data_request " << status;
 		}
