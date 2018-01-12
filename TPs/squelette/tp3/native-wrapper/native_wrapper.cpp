@@ -52,7 +52,7 @@ void NativeWrapper::hal_write32(unsigned int addr, unsigned int data)
 {
 	tlm::tlm_response_status response = socket.write(addr, data);
 	if(response !=  tlm::TLM_OK_RESPONSE) {
-		std::cout << "Write error" << response;
+		std::cerr << "Write error" << response;
 	}
 }
 
@@ -61,7 +61,7 @@ unsigned int NativeWrapper::hal_read32(unsigned int addr)
 	ensitlm::data_t result_value;
 	tlm::tlm_response_status response = socket.read(addr, result_value);
 	if(response !=  tlm::TLM_OK_RESPONSE) {
-		std::cout << "Read error" << response;
+		std::cerr << "Read error" << response;
 	}
 	return result_value;
 }
