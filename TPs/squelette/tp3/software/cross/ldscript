@@ -23,6 +23,6 @@ SECTIONS
           _end = ALIGN(4);
         } > bram
 
-   /* TODO: find suitable address for stack, this one won't work */
-_stack_top  = 0x201FFFFC;
+   /* Take last addr from the SRAM (cf. address_map.h) */
+   _stack_top  = 0x201FFFFC;
 }

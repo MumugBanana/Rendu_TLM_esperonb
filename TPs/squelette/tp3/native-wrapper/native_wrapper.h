@@ -6,17 +6,17 @@
 SC_MODULE(NativeWrapper) {
 
 	ensitlm::initiator_socket<NativeWrapper> socket;
-	sc_core::sc_in<bool>                            irq;
+	sc_core::sc_in<bool> irq;
 
 private:
 	SC_CTOR(NativeWrapper);
 public:
 	/*
-	   We use a singleton here. This is a limitation since it
-	   doesn't allow multiple NativeWrapper instances (multiple CPU
-	   in the platform), but it considerably reduces the
-	   complexity of Makefiles, hal.h, ...
-	*/
+	 We use a singleton here. This is a limitation since it
+	 doesn't allow multiple NativeWrapper instances (multiple CPU
+	 in the platform), but it considerably reduces the
+	 complexity of Makefiles, hal.h, ...
+	 */
 	static NativeWrapper * get_instance();
 
 	void hal_write32(unsigned int addr, unsigned int data);
@@ -29,7 +29,7 @@ public:
 
 	void interrupt_handler_internal();
 
-	bool              interrupt;
+	bool interrupt;
 	sc_core::sc_event interrupt_event;
 };
 

@@ -4,17 +4,17 @@
  ********************************************************************/
 
 /*!
-  \file uart.h
-  \brief UART module
+ \file uart.h
+ \brief UART module
 
 
-*/
+ */
 #ifndef UART_H
 #define UART_H
 
 #include "ensitlm.h"
 
-class UART : public sc_core::sc_module {
+class UART: public sc_core::sc_module {
 public:
 	ensitlm::target_socket<UART> target;
 
@@ -22,7 +22,7 @@ public:
 
 	tlm::tlm_response_status write(ensitlm::addr_t a, ensitlm::data_t d);
 
-	SC_CTOR(UART){/* */};
+	SC_CTOR (UART) {/* */};
 
 private:
 };

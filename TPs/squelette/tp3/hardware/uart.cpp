@@ -4,11 +4,9 @@
  ********************************************************************/
 
 /*!
-  \file uart.cpp
-  \brief body for the file uart.h
-
-
-*/
+ \file uart.cpp
+ \brief body for the file uart.h
+ */
 
 #include "uart.h"
 #include "offsets/uart.h"
@@ -16,13 +14,13 @@
 using namespace std;
 
 tlm::tlm_response_status UART::write(ensitlm::addr_t a, ensitlm::data_t d) {
-	char c = (char)d;
+	char c = (char) d;
 	switch (a) {
 	case UART_FIFO_WRITE:
 		if (c == '\n') {
 			cout << endl;
 		} else {
-			cout << c; 
+			cout << c;
 		}
 		break;
 	default:
@@ -33,8 +31,8 @@ tlm::tlm_response_status UART::write(ensitlm::addr_t a, ensitlm::data_t d) {
 }
 
 tlm::tlm_response_status UART::read(ensitlm::addr_t a, ensitlm::data_t &d) {
-	(void)a;
-	(void)d;
+	(void) a;
+	(void) d;
 	SC_REPORT_ERROR(name(), "read not implemented");
 	return tlm::TLM_ADDRESS_ERROR_RESPONSE;
 }

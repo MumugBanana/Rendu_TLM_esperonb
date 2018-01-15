@@ -25,18 +25,14 @@ sections.txt: $(EXEC)
 	$(TARGET_READELF) -S $< > $@
 
 
-$(EXEC): $(OBJS) ldscript # TODO: dependencies
+$(EXEC): $(OBJS) ldscript
 	$(TARGET_LD) $(OBJS) -o $@ -T ldscript
-# echo "Rule for linking not implemented."; exit 1
-# TODO: use $(TARGET_LD), and use the -T option to point to linker script ldscript
 
-main.o: ../main.c hal.h # TODO: dependancies (il en manque surement)
+main.o: ../main.c hal.h
 	$(TARGET_CC) $(INCLUDE) -o main.o -c ../main.c
-# TODO: compile with target C compiler
 
 %.o: %.s
 	$(TARGET_CC) -o $@ -c $<
-	# echo "Rule for assembly not implemented"; exit 1
 
 .PHONY: clean realclean
 clean:
