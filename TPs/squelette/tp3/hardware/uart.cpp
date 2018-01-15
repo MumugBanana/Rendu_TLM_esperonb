@@ -22,7 +22,7 @@ tlm::tlm_response_status UART::write(ensitlm::addr_t a, ensitlm::data_t d) {
 		if (c == '\n') {
 			cout << endl;
 		} else {
-			cout << c;
+			cout << c; 
 		}
 		break;
 	default:

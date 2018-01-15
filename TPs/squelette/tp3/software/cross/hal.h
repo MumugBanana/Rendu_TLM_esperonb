@@ -50,6 +50,20 @@ void microblaze_enable_interrupts(void) {
 }
 
 /* TODO: printf is disabled, for now ... */
-#define printf(...) do {} while(0)
+#define printf(str) printf_uart(str)
+
+void printf_uart(char* str2) {
+	int i;
+
+	/*char *str = "ab";
+	str[0] = (int) str[0];
+	str[1] = (int) str[1];
+	str[2] = (int) str[2];*/
+	char* str = (void*) str2;
+	char *ptr = (void*) (UART_BASEADDR+UART_FIFO_WRITE);
+	for(i = 0; str[i] != '\0'; i++) {
+	    *ptr = str[i];
+	}
+}
 
 #endif /* HAL_H */

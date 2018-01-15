@@ -35,6 +35,24 @@ void MBWrapper::exec_data_request(enum iss_t::DataAccessType mem_type,
 	uint32_t localbuf;
 	tlm::tlm_response_status status;
 	switch (mem_type) {
+	case iss_t::READ_BYTE: {
+		/* The ISS requested a data read
+ *                    (mem_addr into localbuf). */
+                int decal = mem_addr & 0b11;
+		mem_addr = mem_addr ^ decal;
+		status = socket.read(mem_addr,localbuf);
+		if(status !=  tlm::TLM_OK_RESPONSE) {
+                        std::cerr << "Read error MBWrapper::exec_data_request " << status;
+                }
+		localbuf = uint32_machine_to_be(localbuf);
+		localbuf = (localbuf >> (decal * 8)) & 0xFF;
+		#ifdef DEBUG
+                  std::cout << hex << "read    " << setw(10) << localbuf
+                  << " at address " << mem_addr << std::endl;
+                #endif
+                m_iss.setDataResponse(0, localbuf);
+                
+	} break;
 	case iss_t::READ_WORD: {
 		/* The ISS requested a data read
 		   (mem_addr into localbuf). */
@@ -50,9 +68,7 @@ void MBWrapper::exec_data_request(enum iss_t::DataAccessType mem_type,
 #endif
 		m_iss.setDataResponse(0, localbuf);
 	} break;
-	case iss_t::READ_BYTE:
 	case iss_t::WRITE_HALF:
-	case iss_t::WRITE_BYTE:
 	case iss_t::READ_HALF:
 		// Not needed for our platform.
 		std::cerr << "Operation " << mem_type << " unsupported for "
@@ -61,6 +77,7 @@ void MBWrapper::exec_data_request(enum iss_t::DataAccessType mem_type,
 	case iss_t::LINE_INVAL:
 		// No cache => nothing to do.
 		break;
+	case iss_t::WRITE_BYTE:
 	case iss_t::WRITE_WORD: {
 		/* The ISS requested a data write
 		   (mem_wdata at mem_addr). */
