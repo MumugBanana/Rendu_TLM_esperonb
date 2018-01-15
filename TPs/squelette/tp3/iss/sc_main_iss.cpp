@@ -16,11 +16,11 @@
 #include "../elf-loader/loader/include/exception.h"
 
 namespace soclib {
-namespace common {
-extern bool elf_load(const std::string &filename,
-                     soclib::common::Loader &loader);
+	namespace common {
+		extern bool elf_load(const std::string &filename, soclib::common::Loader &loader);
+	}
 }
-};
+;
 #define SOFT_SIZE 0x2000
 
 int sc_main(int, char **) {
@@ -34,20 +34,17 @@ int sc_main(int, char **) {
 	Gpio gpio("gpio");
 	UART uart("uart");
 
-
 	sc_core::sc_signal<bool> timer_irq("timer_irq");
 	sc_core::sc_signal<bool> vga_irq("vga_irq");
 	sc_core::sc_signal<bool> cpu_irq("cpu_irq");
 
 	// Load the program in RAM
-	soclib::common::Loader::register_loader("elf",
-	                                        soclib::common::elf_load);
+	soclib::common::Loader::register_loader("elf", soclib::common::elf_load);
 	try {
 		soclib::common::Loader loader("../software/cross/a.out");
 		loader.load(inst_ram.storage, 0, SOFT_SIZE);
 		for (int i = 0; i < SOFT_SIZE / 4; i++) {
-			inst_ram.storage[i] =
-			    uint32_be_to_machine(inst_ram.storage[i]);
+			inst_ram.storage[i] = uint32_be_to_machine(inst_ram.storage[i]);
 		}
 	} catch (soclib::exception::RunTimeError e) {
 		std::cerr << "unable to load ELF file in memory:" << std::endl;
@@ -78,7 +75,7 @@ int sc_main(int, char **) {
 
 	//      port             start addr         size
 	bus.map(inst_ram.target, INST_RAM_BASEADDR, INST_RAM_SIZE);
-	bus.map(data_ram.target, SRAM_BASEADDR,  SRAM_SIZE);
+	bus.map(data_ram.target, SRAM_BASEADDR, SRAM_SIZE);
 	bus.map(vga.target, VGA_BASEADDR, VGA_SIZE);
 	bus.map(gpio.target, GPIO_BASEADDR, GPIO_SIZE);
 	bus.map(timer.target, TIMER_BASEADDR, TIMER_SIZE);
